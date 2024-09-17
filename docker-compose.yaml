@@ -34,7 +34,7 @@ services:
     image: mysql:latest
     container_name: fkbd-ghostdb
     ports:
-      - :3306
+      - 3306:3306
     networks:
       - proxy
     restart: unless-stopped
