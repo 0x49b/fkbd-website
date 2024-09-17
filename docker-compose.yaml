@@ -12,13 +12,13 @@ services:
     environment:
       url: https://fkbd.xyz
       database__client: mysql
-      database__connection__host: ghostdb
+      database__connection__host: fkbd-ghostdb
       database__connection__user: root
       database__connection__password: $GHOSTDB_ROOT_PASSWORD
       database__connection__database: ghost
     volumes:
-      - /opt/ghost/content:/var/lib/ghost/content
-      - /opt/ghost/config.production.json:/var/lib/ghost/config.production.json
+      - /opt/fkbd-ghost/content:/var/lib/ghost/content
+      - /opt/fkbd-ghost/config.production.json:/var/lib/ghost/config.production.json
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.fkbd.entrypoints=http"
@@ -43,7 +43,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: $GHOSTDB_ROOT_PASSWORD
     volumes:
-      - /opt/ghost/mysql:/var/lib/mysql
+      - /opt/fkbd-ghost/mysql:/var/lib/mysql
 
 volumes:
   mysql:
