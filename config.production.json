@@ -1,5 +1,5 @@
 {
-    "url": "https://flind.ch",
+    "url": "https://fkbd.xyz",
     "server": {
       "port": 2368,
       "host": "0.0.0.0"
@@ -7,7 +7,7 @@
     "database": {
       "client": "mysql",
       "connection": {
-        "host": "ghostdb",
+        "host": "fkbd-ghostdb",
         "user": "root",
         "password": "changeme",
         "database": "ghost"
