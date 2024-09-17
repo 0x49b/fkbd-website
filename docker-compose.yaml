@@ -10,7 +10,8 @@ services:
     environment:
       url: https://fkbd.xyz
       database__client: mysql
-      database__connection__host: fkbd-ghostdb:3307
+      database__connection__host: fkbd-ghostdb
+      database__connection__port: 3307
       database__connection__user: root
       database__connection__password: $GHOSTDB_ROOT_PASSWORD
       database__connection__database: ghost
