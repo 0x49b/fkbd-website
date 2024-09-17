@@ -1,16 +1,16 @@
 version: '3'
 
 services:
-  ghost:
+  fkbd-ghost:
     image: ghost:latest
-    container_name: ghost
+    container_name: fkbd-ghost
     restart: unless-stopped
     depends_on:
-      - ghostdb
+      - fkbd-ghostdb
     networks:
       - proxy
     environment:
-      url: https://flind.ch
+      url: https://fkbd.xyz
       database__client: mysql
       database__connection__host: ghostdb
       database__connection__user: root
@@ -21,20 +21,20 @@ services:
       - /opt/ghost/config.production.json:/var/lib/ghost/config.production.json
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.flind.entrypoints=http"
-      - "traefik.http.routers.flind.rule=Host(`flind.ch`)"
-      - "traefik.http.middlewares.flind-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.flind.middlewares=flind-https-redirect"
-      - "traefik.http.routers.flind-secure.entrypoints=https"
-      - "traefik.http.routers.flind-secure.rule=Host(`flind.ch`)"
-      - "traefik.http.routers.flind-secure.tls=true"
-      - "traefik.http.routers.flind-secure.service=flind"
-      - "traefik.http.services.flind.loadbalancer.server.port=2368"
+      - "traefik.http.routers.fkbd.entrypoints=http"
+      - "traefik.http.routers.fkbd.rule=Host(`fkbd.xyz`)"
+      - "traefik.http.middlewares.fkbd-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.fkbd.middlewares=fkbd-https-redirect"
+      - "traefik.http.routers.fkbd-secure.entrypoints=https"
+      - "traefik.http.routers.fkbd-secure.rule=Host(`fkbd.xyz`)"
+      - "traefik.http.routers.fkbd-secure.tls=true"
+      - "traefik.http.routers.fkbd-secure.service=fkbd"
+      - "traefik.http.services.fkbd.loadbalancer.server.port=2368"
       - "traefik.docker.network=proxy"
 
-  ghostdb:
+  fkbd-ghostdb:
     image: mysql:latest
-    container_name: ghostdb
+    container_name: fkbd-ghostdb
     ports:
       - 3306:3306
     networks:
