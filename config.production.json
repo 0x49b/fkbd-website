@@ -1,0 +1,45 @@
+{
+    "url": "https://flind.ch",
+    "server": {
+      "port": 2368,
+      "host": "0.0.0.0"
+    },
+    "database": {
+      "client": "mysql",
+      "connection": {
+        "host": "ghostdb",
+        "user": "root",
+        "password": "changeme",
+        "database": "ghost"
+      }
+    },
+    "mail": {
+      "from": "'Your Name' <postmaster@yourblog.com>",
+      "transport": "SMTP",
+      "options": {
+        "service": "Mailgun",
+        "host": "smtp.eu.mailgun.org",
+        "port": 465,
+        "secureConnection": true,
+        "auth": {
+          "user": "postmaster@yourblog.com",
+          "pass": "copy your SMTP password"
+        }
+      }
+    },
+    "logging": {
+        "rotation": {
+        "enabled": true,
+        "count": 10,
+        "period": "1d"
+      },
+      "transports": [
+        "file",
+        "stdout"
+      ]
+    },
+    "process": "systemd",
+    "paths": {
+      "contentPath": "/var/lib/ghost/content"
+    }
+  }

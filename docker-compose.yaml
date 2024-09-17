@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  ghost:
+    image: ghost:latest
+    container_name: ghost
+    restart: unless-stopped
+    depends_on:
+      - ghostdb
+    networks:
+      - proxy
+    environment:
+      url: https://flind.ch
+      database__client: mysql
+      database__connection__host: ghostdb
+      database__connection__user: root
+      database__connection__password: $GHOSTDB_ROOT_PASSWORD
+      database__connection__database: ghost
+    volumes:
+      - /opt/ghost/content:/var/lib/ghost/content
+      - /opt/ghost/config.production.json:/var/lib/ghost/config.production.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.flind.entrypoints=http"
+      - "traefik.http.routers.flind.rule=Host(`flind.ch`)"
+      - "traefik.http.middlewares.flind-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.flind.middlewares=flind-https-redirect"
+      - "traefik.http.routers.flind-secure.entrypoints=https"
+      - "traefik.http.routers.flind-secure.rule=Host(`flind.ch`)"
+      - "traefik.http.routers.flind-secure.tls=true"
+      - "traefik.http.routers.flind-secure.service=flind"
+      - "traefik.http.services.flind.loadbalancer.server.port=2368"
+      - "traefik.docker.network=proxy"
+
+  ghostdb:
+    image: mysql:latest
+    container_name: ghostdb
+    ports:
+      - 3306:3306
+    networks:
+      - proxy
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: $GHOSTDB_ROOT_PASSWORD
+    volumes:
+      - /opt/ghost/mysql:/var/lib/mysql
+
+volumes:
+  mysql:
+  content:
+  config:
+
+networks:
+  proxy:
+    external: true
