@@ -8,6 +8,7 @@
       "client": "mysql",
       "connection": {
         "host": "fkbd-ghostdb",
+        "port": 3307,
         "user": "root",
         "password": "changeme",
         "database": "ghost"
